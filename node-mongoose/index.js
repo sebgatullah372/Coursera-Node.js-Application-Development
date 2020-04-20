@@ -14,7 +14,23 @@ connect.then((db)=>{
     .then((dish)=>{
         console.log(dish);
 
-        return Dishes.find({});
+        return Dishes.findByIdAndUpdate(dish._id,{
+            $set : {description: 'Updated Pizza'}
+        
+        },{
+            new: true
+        }).exec();
+
+    })
+    .then((dish)=>{
+        console.log(dish);
+
+        dish.comments.push({
+            rating: 5,
+            comment: 'I\'m getting a sinking feeling!',
+            author: 'Arnob'
+        });
+        return dish.save();
 
     })
     .then((dishes)=>{
